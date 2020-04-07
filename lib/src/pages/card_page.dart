@@ -13,7 +13,11 @@ class CardPage extends StatelessWidget {
         padding: EdgeInsets.all(10.0),
         children: <Widget>[
           _cardTipo1(),
+          SizedBox(height: 30.0),
           _cardTipo2(),
+          SizedBox(height: 30.0),
+          _cardTipo3(),
+          SizedBox(height: 50.0),
         ],
       ),
     );
@@ -21,6 +25,8 @@ class CardPage extends StatelessWidget {
 
   Widget _cardTipo1() {
     return Card(
+      elevation: 10.0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       child: Column(
         children: <Widget>[
           ListTile(
@@ -32,11 +38,11 @@ class CardPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               FlatButton(
-                child: Text('Cancelar'),
+                child: Text('Cancelar', style: TextStyle(color: Colors.blue),),
                 onPressed: () {},
               ),
               FlatButton(
-                child: Text('Ok'),
+                child: Text('Ok', style: TextStyle(color: Colors.blue),),
                 onPressed: () {},
               ),
             ],
@@ -48,6 +54,39 @@ class CardPage extends StatelessWidget {
 
   Widget _cardTipo2() {
     return Card(
+      clipBehavior: Clip.antiAlias, // aqui sirve para que forzar que se respete los bordes de la tarjeta
+                                    // ya que con la imagen no la respetaba
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+      child: Column(
+        children: <Widget>[
+          FadeInImage(
+            image: NetworkImage('https://upload.wikimedia.org/wikipedia/commons/3/35/Neckertal_20150527-6384.jpg'),
+            placeholder: AssetImage('assets/loading_jar.gif'),
+            fadeInDuration: Duration(milliseconds: 200),
+            height: 300,
+            fit: BoxFit.cover,
+          ),
+          // Image(
+          //   image: NetworkImage('https://upload.wikimedia.org/wikipedia/commons/3/35/Neckertal_20150527-6384.jpg'),
+          // ),
+          Container(
+            padding: EdgeInsets.all(10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text('Esto es un paisaje'),
+                Icon(Icons.spa)
+              ],
+            ) 
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Otra manera de hacer que se respeten los bordes en la tarjeta 2
+  Widget _cardTipo3() {
+    final card = Container(
       child: Column(
         children: <Widget>[
           FadeInImage(
@@ -65,6 +104,25 @@ class CardPage extends StatelessWidget {
             child: Text('Esto es un paisaje')
           ),
         ],
+      ),
+    );
+
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30.0),
+        color: Colors.white,
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 10.0,
+            spreadRadius: 2.0,
+            offset: Offset(2.0, 10.0)
+          )
+        ]
+      ),
+      child: ClipRRect(
+        child: card,
+        borderRadius: BorderRadius.circular(30.0),
       ),
     );
   }
